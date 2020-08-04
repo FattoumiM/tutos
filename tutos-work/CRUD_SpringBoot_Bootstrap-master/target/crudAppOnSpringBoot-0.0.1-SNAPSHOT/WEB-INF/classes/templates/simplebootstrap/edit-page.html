@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Edit User</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<br>
+<div class="container">
+    <p class="h4 mb-4">Save User</p>
+    <form th:action="@{/admin/update}"
+          th:object="${user}" method="POST">
+        <input type="hidden" th:field="*{id}"/>
+
+        <label>Login</label> <input type="text" th:field="*{username}"
+                                    class="form-control mb-4 col-4">
+        <label>Password</label> <input type="text" th:field="*{password}"
+                                       class="form-control mb-4 col-4">
+
+        <label>First name</label> <input type="text" th:field="*{firstName}"
+                                         class="form-control mb-4 col-4">
+
+        <label>Last name</label> <input type="text" th:field="*{lastName}"
+                                        class="form-control mb-4 col-4">
+
+        <label>Roles for user</label>
+        <br>
+        <tr>
+            <td><input type="checkbox" name="user" value="1">USER<Br>
+                <input type="checkbox" name="admin" value="2">ADMIN<Br>
+            </td>
+        </tr>
+        <button type="submit" class="btn btn-info col-24">Save</button>
+    </form>
+    <hr>
+    <br>
+    <a th:href="@{/admin}">Back to Users List</a>
+</div>
+
+</body>
+</html>

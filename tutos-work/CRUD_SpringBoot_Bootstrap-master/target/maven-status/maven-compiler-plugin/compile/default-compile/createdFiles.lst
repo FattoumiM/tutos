@@ -1,0 +1,11 @@
+ru\task\crudapponspringboot\dao\UserDaoImpl.class
+ru\task\crudapponspringboot\service\UserDetailServiceImpl.class
+ru\task\crudapponspringboot\service\UserService.class
+ru\task\crudapponspringboot\config\SecurityConfig.class
+ru\task\crudapponspringboot\model\Role.class
+ru\task\crudapponspringboot\CrudAppOnSpringBootApplication.class
+ru\task\crudapponspringboot\controller\UserLoginController.class
+ru\task\crudapponspringboot\dao\UserDao.class
+ru\task\crudapponspringboot\controller\UserController.class
+ru\task\crudapponspringboot\service\UserServiceImpl.class
+ru\task\crudapponspringboot\model\User.class

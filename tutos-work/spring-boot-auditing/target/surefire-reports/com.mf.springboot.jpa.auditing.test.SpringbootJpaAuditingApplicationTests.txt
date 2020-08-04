@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.mf.springboot.jpa.auditing.test.SpringbootJpaAuditingApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.879 s - in com.mf.springboot.jpa.auditing.test.SpringbootJpaAuditingApplicationTests

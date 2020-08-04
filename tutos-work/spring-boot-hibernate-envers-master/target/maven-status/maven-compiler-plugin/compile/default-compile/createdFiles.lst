@@ -1,0 +1,10 @@
+com\mf\spring\boot\rest\controller\CityController.class
+com\mf\spring\boot\rest\App.class
+com\mf\spring\boot\rest\model\EntityWithRevision.class
+com\mf\spring\boot\rest\repository\CityRevisionRepository.class
+com\mf\spring\boot\rest\model\RevisionsEntity.class
+com\mf\spring\boot\rest\controller\CityRevisionController.class
+com\mf\spring\boot\rest\listener\EntityRevisionListener.class
+com\mf\spring\boot\rest\repository\CityRepository.class
+com\mf\spring\boot\rest\model\City.class
+com\mf\spring\boot\rest\controller\WelcomeController.class

@@ -1,0 +1,13 @@
+com\mf\springboot\springdata\envers\entity\Comment.class
+com\mf\springboot\springdata\envers\repository\PostRepository.class
+com\mf\springboot\springdata\envers\entity\User.class
+com\mf\springboot\springdata\envers\repository\CommentRepository.class
+com\mf\springboot\springdata\envers\repository\ImageRepository.class
+com\mf\springboot\springdata\envers\entity\Post.class
+com\mf\springboot\springdata\envers\repository\UserRepository.class
+com\mf\springboot\springdata\envers\service\BlogService.class
+com\mf\springboot\springdata\envers\SpringAuditDemoApplication.class
+com\mf\springboot\springdata\envers\controller\BlogController.class
+com\mf\springboot\springdata\envers\entity\Category.class
+com\mf\springboot\springdata\envers\repository\CategoryRepository.class
+com\mf\springboot\springdata\envers\entity\Image.class

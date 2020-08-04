@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ru.task.crudapponspringboot.CrudAppOnSpringBootApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.298 s - in ru.task.crudapponspringboot.CrudAppOnSpringBootApplicationTests

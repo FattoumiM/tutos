@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+   >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>User Page</title>
+</head>
+<body>
+<table width="100%" cellspacing="0" cellpadding="4">
+    <tr>
+        <td></td>
+        <td>User-Info</td>
+    </tr>
+    <tr>
+        <td align="right" width="100">Login: </td>
+        <td th:text="${user.username}"></td>
+    </tr>
+
+    <tr>
+        <td align="right" width="100">Password: </td>
+        <td th:text="${user.password}"></td>
+    </tr>
+    <tr>
+        <td align="right" width="100">First name: </td>
+        <td th:text="${user.firstName}"></td>
+    </tr>
+    <tr>
+        <td align="right" width="100">Last name: </td>
+        <td th:text="${user.lastName}"></td>
+    </tr>
+    <tr>
+        <td align="right" width="150">User Roles: </td>
+        <td> <p th:each="role : ${user.getRoles()}" th:text="${role.getAuthority()}"></p></br></td>
+    </tr>
+
+    </tr>
+</table>
+<div th:include="logout"></div>
+</body>
+</html>

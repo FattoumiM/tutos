@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{css/help.css}"/>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>User page</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark"
+     style="background-color:#0d0d25">
+    <div style="color: aliceblue">
+        <span sec:authentication="name" class="user"> </span>
+    </div>
+    <p>_</p>
+    <div style="color: aliceblue"> with roles: <span><th:block
+            th:each="authority, iterStat :${#authentication.getAuthorities()}"
+            th:text="${authority.getAuthority() + (iterStat.last?'':',')}">
+    </th:block></span>
+    </div>
+    <div class="navbar-nav position-absolute" style="right: 0">
+        <li><a href="/logout"
+               class="nav-link nav-right">Logout</a></li>
+    </div>
+</nav>
+<br>
+<main class="flex-grow-1 flex-shrink-1 d-flex">
+
+    <div class="container-fluid px-0">
+        <div class="row justify-content-center no-gutters vh-100">
+            <div class="col-md-2" style="background-color: #f5f5f5">
+                <a href="/user"
+                   class="list-group-item list-group-item-action active rounded-0 border border-info">User</a>
+            </div>
+            <div class="col-md-10 p-4" style="background-color: #efefef">
+                <h1>
+                    User information-page
+                </h1>
+                <div class="d-flex flex-column" style="border: 1px solid lightgrey">
+                    <div class="p-2" style="font-size:large;color: black; font-weight: 600;
+                    background-color:#F5F5F5; height: 53px">About user
+                    </div>
+                </div>
+                <div class="parent" style="border: 1px solid lightgrey">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="userInfo : ${user}">
+                            <td th:text="${userInfo.id}"></td>
+                            <td th:text="${userInfo.username}"></td>
+                            <td th:text="${userInfo.password}"></td>
+                            <td th:text="${userInfo.firstName}"></td>
+                            <td th:text="${userInfo.lastName}"></td>
+                            <td>
+                                <p>
+                                    <th:block th:each="authority,
+                     iterStat : ${user.roles}">
+                                        <th:block th:text="${authority.getAuthority() + (iterStat.last?'':' ')}">
+                                        </th:block>
+                                    </th:block>
+                                </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
