@@ -1,0 +1,11 @@
+net\guides\springboot\loginregistrationspringbootauthjsp\repository\RoleRepository.class
+net\guides\springboot\loginregistrationspringbootauthjsp\service\UserServiceImpl.class
+net\guides\springboot\loginregistrationspringbootauthjsp\model\User.class
+net\guides\springboot\loginregistrationspringbootauthjsp\model\Role.class
+net\guides\springboot\loginregistrationspringbootauthjsp\repository\UserRepository.class
+net\guides\springboot\loginregistrationspringbootauthjsp\web\UserController.class
+net\guides\springboot\loginregistrationspringbootauthjsp\service\UserDetailsServiceImpl.class
+net\guides\springboot\loginregistrationspringbootauthjsp\Application.class
+net\guides\springboot\loginregistrationspringbootauthjsp\validator\UserValidator.class
+net\guides\springboot\loginregistrationspringbootauthjsp\service\UserService.class
+net\guides\springboot\loginregistrationspringbootauthjsp\config\WebSecurityConfig.class

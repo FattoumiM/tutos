@@ -1,0 +1,11 @@
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\config\WebSecurityConfig.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\repository\UserRepository.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\service\UserService.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\repository\RoleRepository.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\service\UserDetailsServiceImpl.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\web\UserController.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\service\UserServiceImpl.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\Application.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\validator\UserValidator.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\model\Role.java
+E:\workspaces\workspace_guides\spring-boot-tutorial-master\login-registration-springboot-hibernate-jsp-auth\src\main\java\net\guides\springboot\loginregistrationspringbootauthjsp\model\User.java
