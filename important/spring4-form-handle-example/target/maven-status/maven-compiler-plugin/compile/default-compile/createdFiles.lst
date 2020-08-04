@@ -1,0 +1,13 @@
+com\mkyong\form\config\SpringWebConfig.class
+com\mkyong\form\config\SpringDBConfig.class
+com\mkyong\form\web\UserController.class
+com\mkyong\form\validator\UserFormValidator.class
+com\mkyong\form\model\User.class
+com\mkyong\form\service\UserService.class
+com\mkyong\form\exception\GlobalExceptionHandler.class
+com\mkyong\form\service\UserServiceImpl.class
+com\mkyong\form\dao\UserDaoImpl.class
+com\mkyong\form\dao\UserDaoImpl$1.class
+com\mkyong\form\validator\EmailValidator.class
+com\mkyong\form\dao\UserDao.class
+com\mkyong\form\dao\UserDaoImpl$UserMapper.class
