@@ -1,0 +1,37 @@
+*.class
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+.settings/
+*.log
+target/
+*/target/
+*.bak
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Remove eclipse related files
+.classpath
+.project
+.metadata
+/bin/
+
+# Remove IntelliJ related files
+*.iml
+.idea/*
+*/.idea/*

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.0.0/UML" xmi:id="_11_5_e240333_1154527378140_885914_432" name="presentation" metamodelReference="_11_5_e240333_1154527378140_885914_432_packageImportcreatedOnLoad">
+  <eAnnotations xmi:id="_gddegGE_EemhjPQYmoQrtQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_gddegWE_EemhjPQYmoQrtQ" name="presentation" nsURI="http:///schemas/presentation/_gFwwMGE_EemhjPQYmoQrtQ/0" nsPrefix="presentation">
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_gddegmE_EemhjPQYmoQrtQ" name="WebActionFormScope">
+        <eAnnotations xmi:id="_gddeg2E_EemhjPQYmoQrtQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_9_0_1fe00f9_1119337248937_568959_38"/>
+        <eLiterals xmi:id="_gddehGE_EemhjPQYmoQrtQ" name="default"/>
+        <eLiterals xmi:id="_gddehWE_EemhjPQYmoQrtQ" name="none" value="1"/>
+        <eLiterals xmi:id="_gddehmE_EemhjPQYmoQrtQ" name="request" value="2"/>
+        <eLiterals xmi:id="_gddeh2E_EemhjPQYmoQrtQ" name="session" value="3"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_gddeiGE_EemhjPQYmoQrtQ" name="WebFieldType">
+        <eAnnotations xmi:id="_gddeiWE_EemhjPQYmoQrtQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_9_0_1fe00f9_1119337248937_274451_21"/>
+        <eLiterals xmi:id="_gddeimE_EemhjPQYmoQrtQ" name="default"/>
+        <eLiterals xmi:id="_gddei2E_EemhjPQYmoQrtQ" name="select" value="1"/>
+        <eLiterals xmi:id="_gddejGE_EemhjPQYmoQrtQ" name="hidden" value="2"/>
+        <eLiterals xmi:id="_gddejWE_EemhjPQYmoQrtQ" name="password" value="3"/>
+        <eLiterals xmi:id="_gddejmE_EemhjPQYmoQrtQ" name="link" value="4"/>
+        <eLiterals xmi:id="_gddej2E_EemhjPQYmoQrtQ" name="textarea" value="5"/>
+        <eLiterals xmi:id="_gddekGE_EemhjPQYmoQrtQ" name="text" value="6"/>
+        <eLiterals xmi:id="_gddekWE_EemhjPQYmoQrtQ" name="checkbox" value="7"/>
+        <eLiterals xmi:id="_gddekmE_EemhjPQYmoQrtQ" name="multibox" value="8"/>
+        <eLiterals xmi:id="_gddek2E_EemhjPQYmoQrtQ" name="radio" value="9"/>
+        <eLiterals xmi:id="_gddelGE_EemhjPQYmoQrtQ" name="plaintext" value="10"/>
+        <eLiterals xmi:id="_gddelWE_EemhjPQYmoQrtQ" name="table" value="11"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_gddelmE_EemhjPQYmoQrtQ" name="WebActionType">
+        <eAnnotations xmi:id="_gddel2E_EemhjPQYmoQrtQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_9_0_1fe00f9_1119337248937_121659_52"/>
+        <eLiterals xmi:id="_gddemGE_EemhjPQYmoQrtQ" name="default"/>
+        <eLiterals xmi:id="_gddemWE_EemhjPQYmoQrtQ" name="hyperlink" value="1"/>
+        <eLiterals xmi:id="_gddemmE_EemhjPQYmoQrtQ" name="form" value="2"/>
+        <eLiterals xmi:id="_gddem2E_EemhjPQYmoQrtQ" name="image" value="3"/>
+        <eLiterals xmi:id="_gddenGE_EemhjPQYmoQrtQ" name="table" value="4"/>
+        <eLiterals xmi:id="_gddenWE_EemhjPQYmoQrtQ" name="popup" value="5"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_gddenmE_EemhjPQYmoQrtQ" name="WebExportType">
+        <eAnnotations xmi:id="_gdden2E_EemhjPQYmoQrtQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_9_0_1fe00f9_1119337248937_819259_44"/>
+        <eLiterals xmi:id="_gddeoGE_EemhjPQYmoQrtQ" name="default"/>
+        <eLiterals xmi:id="_gddeoWE_EemhjPQYmoQrtQ" name="xml" value="1"/>
+        <eLiterals xmi:id="_gddeomE_EemhjPQYmoQrtQ" name="csv" value="2"/>
+        <eLiterals xmi:id="_gddeo2E_EemhjPQYmoQrtQ" name="excel" value="3"/>
+        <eLiterals xmi:id="_gddepGE_EemhjPQYmoQrtQ" name="pdf" value="4"/>
+        <eLiterals xmi:id="_gddepWE_EemhjPQYmoQrtQ" name="none" value="5"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_gddepmE_EemhjPQYmoQrtQ" name="ViewType">
+        <eAnnotations xmi:id="_gddep2E_EemhjPQYmoQrtQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_9_0_2_12ab03bf_1125759055984_835993_0"/>
+        <eLiterals xmi:id="_gddeqGE_EemhjPQYmoQrtQ" name="default"/>
+        <eLiterals xmi:id="_gddeqWE_EemhjPQYmoQrtQ" name="regular" value="1"/>
+        <eLiterals xmi:id="_gddeqmE_EemhjPQYmoQrtQ" name="popup" value="2"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_gddeq2E_EemhjPQYmoQrtQ" name="TernaryBoolean">
+        <eAnnotations xmi:id="_gdderGE_EemhjPQYmoQrtQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_11_6_e240333_1161153044093_386067_123"/>
+        <eLiterals xmi:id="_gdderWE_EemhjPQYmoQrtQ" name="default"/>
+        <eLiterals xmi:id="_gddermE_EemhjPQYmoQrtQ" name="true" value="1"/>
+        <eLiterals xmi:id="_gdder2E_EemhjPQYmoQrtQ" name="false" value="2"/>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <packageImport xmi:id="_11_5_e240333_1154527378140_885914_432_packageImportcreatedOnLoad">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_METAMODELS/UML.metamodel.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:id="_0primitiveTypespresentation">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:id="_0javaPrimitiveTypespresentation">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_9_0_1fe00f9_1119337248937_568959_38" name="WebActionFormScope">
+    <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_999510_121" body="Denotes the scope given to the &quot;form&quot; attribute when executing an action." annotatedElement="_9_0_1fe00f9_1119337248937_568959_38"/>
+    <ownedLiteral xmi:id="_11_6_e240333_1161152779750_588418_118" name="default"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_941904_35" name="none">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_799053_122" body="Denotes that the &quot;form&quot; attribute will not be set within any scope." annotatedElement="_9_0_1fe00f9_1119337248937_941904_35"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_183700_36" name="request">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_763340_123" body="Denotes that the &quot;form&quot; attribute will be set within a request scope." annotatedElement="_9_0_1fe00f9_1119337248937_183700_36"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_114826_37" name="session">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_228106_124" body="Denotes that the &quot;form&quot; attribute will be set within a session scope." annotatedElement="_9_0_1fe00f9_1119337248937_114826_37"/>
+    </ownedLiteral>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_9_0_1fe00f9_1119337248937_274451_21" name="WebFieldType">
+    <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_124122_76" body="Denotes the type of the form field to use for an action parameter." annotatedElement="_9_0_1fe00f9_1119337248937_274451_21"/>
+    <ownedLiteral xmi:id="_11_6_e240333_1161152781468_227878_121" name="default"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_416969_11" name="select">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_667612_77" body="Use a combobox (also known as drop-down box) from which to select the value, only a single value can be selected unless the underlying type is a collection or array." annotatedElement="_9_0_1fe00f9_1119337248937_416969_11"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_572946_12" name="hidden">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_270556_78" body="Do not show the parameter on the screen." annotatedElement="_9_0_1fe00f9_1119337248937_572946_12"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_638510_13" name="password">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_604027_79" body="The field should be shown but it's content is to be masked using asterisks." annotatedElement="_9_0_1fe00f9_1119337248937_638510_13"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_778620_14" name="link">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_732557_80" body="This type can only be used when displaying the field in a table and you want to attach it to only of the possible page actions." annotatedElement="_9_0_1fe00f9_1119337248937_778620_14"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_558582_15" name="textarea">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_937103_81" body="Use a textarea with multiple rows." annotatedElement="_9_0_1fe00f9_1119337248937_558582_15"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_43090_16" name="text">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_969524_82" body="Use a simple text field." annotatedElement="_9_0_1fe00f9_1119337248937_43090_16"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_91479_17" name="checkbox">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_484910_83" body="Use a checkbox, ideal for boolean values." annotatedElement="_9_0_1fe00f9_1119337248937_91479_17"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_926770_18" name="multibox">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_414521_84" body="Use this field type when you want to render several checkboxes that need to be initialized based on the property of a single array." annotatedElement="_9_0_1fe00f9_1119337248937_926770_18"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_790419_19" name="radio">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_303086_85" body="Generates a few options from which the value can be selected, only a single option can be selected at a time." annotatedElement="_9_0_1fe00f9_1119337248937_790419_19"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_219748_20" name="plaintext">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_388402_86" body="Display this property as a plain text string." annotatedElement="_9_0_1fe00f9_1119337248937_219748_20"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_5_1_12ab03bf_1127428788109_430313_0" name="table">
+      <ownedComment xmi:id="_9_5_1_12ab03bf_1127428960765_521717_1" body="Allows you to submit an entire table (only makes sense on an array or collection) type.  Arrays are preferrable as they allow us to know the type of element which makes up the collection." annotatedElement="_9_5_1_12ab03bf_1127428788109_430313_0"/>
+    </ownedLiteral>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_9_0_1fe00f9_1119337248937_121659_52" name="WebActionType">
+    <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_360591_137" body="Denotes the type of the generated struts action, as displayed on screen." annotatedElement="_9_0_1fe00f9_1119337248937_121659_52"/>
+    <ownedLiteral xmi:id="_11_6_e240333_1161152780343_930810_119" name="default"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_344864_49" name="hyperlink">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_390532_138" body="The action will be rendered as an hyperlink." annotatedElement="_9_0_1fe00f9_1119337248937_344864_49"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_180440_50" name="form">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_745703_139" body="The action will be rendered as a form." annotatedElement="_9_0_1fe00f9_1119337248937_180440_50"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_526064_51" name="image">
+      <ownedComment xmi:id="_9_0_1fe00f9_1119337319421_115857_140" body="The action will be rendered as a clickable image." annotatedElement="_9_0_1fe00f9_1119337248937_526064_51"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_2_1fe00f9_1122552631953_327936_0" name="table">
+      <ownedComment xmi:id="_9_0_2_1fe00f9_1122552645078_318201_1" body="Denotes the action will work on all rows of a table." annotatedElement="_9_0_2_1fe00f9_1122552631953_327936_0"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_2_12ab03bf_1125616954921_758307_0" name="popup">
+      <ownedComment xmi:id="_9_0_2_12ab03bf_1125616960718_872602_1" body="When this is selected the resulting view will be rendered as a popup." annotatedElement="_9_0_2_12ab03bf_1125616954921_758307_0"/>
+    </ownedLiteral>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_9_0_1fe00f9_1119337248937_819259_44" name="WebExportType">
+    <ownedLiteral xmi:id="_11_6_e240333_1161152780921_326825_120" name="default"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_322449_39" name="xml"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_219149_40" name="csv"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_563091_41" name="excel"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_805562_42" name="pdf"/>
+    <ownedLiteral xmi:id="_9_0_1fe00f9_1119337248937_670329_43" name="none"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_9_0_2_12ab03bf_1125759055984_835993_0" name="ViewType">
+    <ownedComment xmi:id="_9_0_2_12ab03bf_1125759158093_52772_4" body="Represents the types of views." annotatedElement="_9_0_2_12ab03bf_1125759055984_835993_0"/>
+    <ownedLiteral xmi:id="_11_6_e240333_1161152774281_666603_117" name="default"/>
+    <ownedLiteral xmi:id="_9_0_2_12ab03bf_1125759114125_637903_1" name="regular">
+      <ownedComment xmi:id="_9_0_2_12ab03bf_1125759158093_515718_5" body="A &quot;regular&quot; view." annotatedElement="_9_0_2_12ab03bf_1125759114125_637903_1"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_9_0_2_12ab03bf_1125759114125_324601_2" name="popup">
+      <ownedComment xmi:id="_9_0_2_12ab03bf_1125759158093_568254_6" body="A &quot;popup&quot; view." annotatedElement="_9_0_2_12ab03bf_1125759114125_324601_2"/>
+    </ownedLiteral>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527331125_669071_417" name="" navigableOwnedEnd="_11_5_e240333_1154527331125_934188_419">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527331125_934188_419" name="extension_FrontEndView" visibility="private" aggregation="composite" association="_11_5_e240333_1154527331125_669071_417">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_9_0_1fe00f9_1119337248937_676970_30"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527331140_887349_421" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527331140_484488_420" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527331125_15563_418"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527331125_934188_419"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527288062_877396_341" name="" navigableOwnedEnd="_11_5_e240333_1154527288062_856788_343">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527288062_856788_343" name="extension_andromda_presentation_web_action_form_reset" visibility="private" aggregation="composite" association="_11_5_e240333_1154527288062_877396_341">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287671_31101_88"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527288062_56699_345" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527288062_595912_344" name=""/>
+    </ownedEnd>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527288062_856788_343"/>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527288062_348945_342"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527287968_626765_177" name="" navigableOwnedEnd="_11_5_e240333_1154527287968_98523_179">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527287968_98523_179" name="extension_FrontEndRegistration" visibility="private" aggregation="composite" association="_11_5_e240333_1154527287968_626765_177">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_9_0_2_12ab03bf_1126726268765_386289_0"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527287968_224700_181" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527287968_918628_180" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287968_39304_178"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527287968_98523_179"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527288078_207838_368" name="" navigableOwnedEnd="_11_5_e240333_1154527288078_778765_370">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527288078_778765_370" name="extension_FrontEndApplication" visibility="private" aggregation="composite" association="_11_5_e240333_1154527288078_207838_368">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_9_0_1fe00f9_1119337248937_791195_9"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527288078_484104_372" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527288078_194545_371" name=""/>
+    </ownedEnd>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527288078_778765_370"/>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527288078_528195_369"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527287968_334402_165" name="" navigableOwnedEnd="_11_5_e240333_1154527287968_514621_167">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527287968_514621_167" name="extension_andromda_presentation_web_view_field_calendar" visibility="private" aggregation="composite" association="_11_5_e240333_1154527287968_334402_165">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287656_847272_19"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527287968_189272_169" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527287968_860457_168" name=""/>
+    </ownedEnd>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527287968_514621_167"/>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287968_867227_166"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527288000_296291_252" name="" navigableOwnedEnd="_11_5_e240333_1154527288000_912747_254">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527288000_912747_254" name="extension_andromda_presentation_view_table_columns" visibility="private" aggregation="composite" association="_11_5_e240333_1154527288000_296291_252">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287671_632374_75"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527288000_159732_256" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527288000_27717_255" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527288000_288006_253"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527288000_912747_254"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527287968_599262_170" name="" navigableOwnedEnd="_11_5_e240333_1154527287968_870612_172">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527287968_870612_172" name="extension_andromda_presentation_web_view_field_calendar" visibility="private" aggregation="composite" association="_11_5_e240333_1154527287968_599262_170">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287656_847272_19"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527287968_335215_174" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527287968_561745_173" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287968_13317_171"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527287968_870612_172"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527288000_831781_262" name="" navigableOwnedEnd="_11_5_e240333_1154527288000_263835_264">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527288000_263835_264" name="extension_FrontEndSessionObject" visibility="private" aggregation="composite" association="_11_5_e240333_1154527288000_831781_262">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_9_0_1fe00f9_1119337248937_233969_55"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527288000_473429_266" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527288000_852272_265" name=""/>
+    </ownedEnd>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527288000_263835_264"/>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527288000_343009_263"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527287890_998142_106" name="" navigableOwnedEnd="_11_5_e240333_1154527287890_353960_108">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527287890_353960_108" name="extension_andromda_presentation_controller_usecase" visibility="private" aggregation="composite" association="_11_5_e240333_1154527287890_998142_106">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287656_99430_24"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527287890_264361_110" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527287890_455090_109" name=""/>
+    </ownedEnd>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527287890_353960_108"/>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287890_496902_107"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527287937_114543_154" name="" navigableOwnedEnd="_11_5_e240333_1154527287937_268071_156">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527287937_268071_156" name="extension_FrontEndException" visibility="private" aggregation="composite" association="_11_5_e240333_1154527287937_114543_154">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_9_0_1fe00f9_1119337248937_447433_8"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527287937_916429_158" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527287937_973782_157" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287937_730560_155"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527287937_268071_156"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527287968_226810_192" name="" navigableOwnedEnd="_11_5_e240333_1154527287968_12122_194">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527287968_12122_194" name="extension_FrontEndUseCase" visibility="private" aggregation="composite" association="_11_5_e240333_1154527287968_226810_192">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_9_0_1fe00f9_1119337248937_839982_7"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527287968_844687_196" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527287968_194351_195" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287968_667419_193"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527287968_12122_194"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_5_e240333_1154527288000_271313_257" name="" navigableOwnedEnd="_11_5_e240333_1154527288000_709450_259">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_e240333_1154527288000_709450_259" name="extension_andromda_presentation_view_table_columns" visibility="private" aggregation="composite" association="_11_5_e240333_1154527288000_271313_257">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287671_632374_75"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_e240333_1154527288000_130774_261" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_e240333_1154527288000_466581_260" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_5_e240333_1154527288000_402729_258"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_5_e240333_1154527288000_709450_259"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_11_6_e240333_1161153044093_386067_123" name="TernaryBoolean">
+    <ownedLiteral xmi:id="_11_6_e240333_1161153044171_420133_126" name="default"/>
+    <ownedLiteral xmi:id="_11_6_e240333_1161153044140_843873_124" name="true"/>
+    <ownedLiteral xmi:id="_11_6_e240333_1161153044171_46313_125" name="false"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_6_e240333_1161154437921_99743_145" name="" navigableOwnedEnd="_11_6_e240333_1161154437921_48395_147">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_6_e240333_1161154437921_48395_147" name="extension_Message" visibility="private" aggregation="composite" association="_11_6_e240333_1161154437921_99743_145">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_6_e240333_1161154424000_684096_139"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_6_e240333_1161154437921_973089_149" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_6_e240333_1161154437921_568484_148" name=""/>
+    </ownedEnd>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_6_e240333_1161154437921_48395_147"/>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_6_e240333_1161154437921_860306_146"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_11_6_e240333_1161154558906_210642_156" name="" navigableOwnedEnd="_11_6_e240333_1161154558906_939217_158">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_6_e240333_1161154558906_939217_158" name="extension_Table" visibility="private" aggregation="composite" association="_11_6_e240333_1161154558906_210642_156">
+      <type xmi:type="uml:Stereotype" href="org.andromda.profile.profile.uml#_11_5_e240333_1154527287671_632374_75"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_6_e240333_1161154558906_878400_160" name="" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_6_e240333_1161154558906_656073_159" name=""/>
+    </ownedEnd>
+    <memberEnd href="org.andromda.profile.profile.uml#_11_6_e240333_1161154558906_663163_157"/>
+    <memberEnd xmi:type="uml:ExtensionEnd" href="#_11_6_e240333_1161154558906_939217_158"/>
+  </packagedElement>
+</uml:Profile>

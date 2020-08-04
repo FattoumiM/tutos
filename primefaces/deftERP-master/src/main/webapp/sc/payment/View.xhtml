@@ -1,0 +1,155 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:o="http://omnifaces.org/ui">
+
+
+    <ui:include src="/sc/confirmation.xhtml"/>
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar" jsf:rendered="#{empty paymentController.partialListType}">
+            <div class="form-nav">
+                <span class="form-nav-item">#{messages.CustomerPayments}</span>  
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{paymentController.payment.name}</span>   
+            </div>
+        </div>
+        <div class="col-md-12 card z-depth-1 tool-bar" jsf:rendered="#{paymentController.partialListType == 'partner'}">
+            <div class="form-nav">
+                <p:link  class="form-nav" value="#{paymentController.payment.partner.name}" outcome="/sc/customer/index">
+                    <f:param name="id" value="#{paymentController.payment.partner.id}"/>
+                </p:link>
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{messages.CustomerPayments}</span>  
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{paymentController.payment.name}}</span>   
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <a class="waves-effect waves-light btn btn-icon btn-primary list-slider" onclick="listSliderClicked();">
+                <i class="fa fa-bars"/>
+            </a>
+            <div class="vertical-spacer"/>
+            <p:commandButton
+                value="#{messages.Validate}" 
+                process="@this"
+                rendered="#{(paymentController.payment.state == 'Draft')}" 
+                class="waves-effect waves-light btn btn-primary"
+                actionListener="#{paymentController.validatePayment}" 
+                update=":mainForm:itemForm, :mainForm:itemList"/>        
+            <p:commandButton class="waves-effect waves-light btn btn-primary" value="#{messages.Edit}" actionListener="#{paymentController.prepareEdit}"  update=":mainForm:itemForm, :mainForm:itemList"/>               
+            <p:commandButton class="waves-effect waves-light btn btn-primary" value="#{messages.Create}" actionListener="#{paymentController.prepareCreate}" update=":mainForm:itemForm, :mainForm:itemList" /> 
+            <p:commandButton class="waves-effect waves-light btn btn-primary" value="#{messages.Delete}" actionListener="#{paymentController.deletePayment}" update=":mainForm:itemForm, :mainForm:itemList">
+                <p:confirm header="#{messages.ConfirmationHeader}"  message="#{messages.ConfirmMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+            <p:commandButton class="waves-effect waves-light btn btn-primary" value="#{messages.Duplicate}" actionListener="#{paymentController.duplicatePayment}" update=":mainForm:itemForm, :mainForm:itemList" />
+
+        </div>
+    </div>
+
+    <div class="row">  
+        <div class="col-md-10 col-md-offset-1 form-body card z-depth-2">          
+            <div class="row">
+                <div class="col-md-5">
+                    <div id="form-name">
+                        #{paymentController.payment.name}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-pagination">
+                        <p:commandLink class="left-arrow" actionListener="#{paymentController.previousPayment}" process="@this" update=":mainForm:itemForm, :mainForm:itemList" oncomplete="setNextFormURL('id',formId)"> 
+                            <span class="fa fa-chevron-left" aria-hidden="true"/> 
+                        </p:commandLink>    
+                        <div class="form-number">
+                            <span>#{paymentController.paymentIndex} / #{paymentController.payments.size()}</span>
+                        </div>
+                        <p:commandLink class="right-arrow" actionListener="#{paymentController.nextPayment}" process="@this" update=":mainForm:itemForm, :mainForm:itemList" oncomplete="setNextFormURL('id',formId)"> 
+                            <span class="fa fa-chevron-right" aria-hidden="true"/> 
+                        </p:commandLink> 
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div id="form-status"  class="z-depth-1">
+                        <span jsf:rendered="#{paymentController.payment.state == 'Draft'}">
+                            #{messages.Draft} 
+                        </span>
+                        <span jsf:rendered="#{paymentController.payment.state == 'Posted'}">
+                            #{messages.Posted} 
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.PaymentType}</span>
+                        </div> 
+                        <div class="col-md-7">
+                            <h:outputText value="#{messages.ReceiveMoney}" rendered="#{paymentController.payment.type == 'in'}" class="form-data-value font-1"/>
+                            <h:outputText value="#{messages.SendMoney}" rendered="#{paymentController.payment.type == 'out'}" class="form-data-value font-1"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.Customer}</span>
+                        </div>
+                        <div class="col-md-7">
+                            <p:link  class="form-data-value font-1 form-link" value="#{paymentController.payment.partner.name}" outcome="/sc/customer/index">
+                                <f:param name="id" value="#{paymentController.payment.partner.id}"/>
+                            </p:link>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.PaymentMethod}</span>
+                        </div>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{paymentController.payment.journal.name}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.PaymentAmount}</span>
+                        </div>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{messages.Currency} #{paymentController.payment.amount}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1" jsf:rendered="#{paymentController.payment.type == 'in'}">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.OutstandingAmount}</span>
+                        </div>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{messages.Currency} #{paymentController.payment.overpayment}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.PaymentDate}</span>
+                        </div>
+                        <div class="col-md-7">
+                            <h:outputText id="date" value="#{paymentController.payment.date}" class="form-data-value font-1">
+                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                            </h:outputText>
+                        </div>
+                    </div>
+                </div>
+            </div>      
+        </div>     
+    </div>
+
+    <script type="text/javascript">
+        var formId = "#{paymentController.payment.id}";
+        setFormURL('id', formId);
+    </script>
+
+
+</ui:composition>

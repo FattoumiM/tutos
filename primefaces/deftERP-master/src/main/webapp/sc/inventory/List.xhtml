@@ -1,0 +1,107 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">    
+
+            <div class="form-nav">  
+                <span class="form-nav-item">#{messages.InventoryValuation}</span>
+            </div>
+            <div class="form-nav" style="float: right; margin-right: 8px;">  
+                <span class="form-nav-item" style="color: #21b799; font-size:12px;">#{messages.InventoryValuationMethodMsg}</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row"> 
+        <p:dataTable id="productTable"
+                     binding="#{inventoryTable}"
+                     selection="#{inventoryController.productInventory}"
+                     class="fit-content-table"
+                     value="#{inventoryController.inventory}"
+                     emptyMessage="#{messages.EmptyMessage}"
+                     var="item"
+                     filteredValue="#{inventoryController.filteredInventory}"                       
+                     rowKey="#{item.id}"
+                     selectionMode="single"
+                     sortBy="#{item.product.description}"
+                     sortOrder="ascending"
+                     paginator="true"
+                     paginatorAlwaysVisible="true"
+                     widgetVar="inventoryTable"
+                     rows="#{messages.MaxRows}">
+
+            <f:facet name="header" class="card z-depth-1">
+                <p:outputPanel>
+                    <div class="searchLoader">
+                        <p:graphicImage  name="/img/search-loader.gif"/>
+                    </div>
+                    <input type="text" jsf:id="globalFilter" jsf:onkeyup="PF('inventoryTable').filter()" class="search" placeholder="#{messages.Search}" onkeypress="if (event.keyCode == 13) {return false;}"/>               
+                </p:outputPanel>
+            </f:facet>
+
+            <p:ajax event="page" oncomplete="updateTable();"/>
+            <p:ajax event="sort" oncomplete="updateTable();"/>
+            <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="updateTable(); hideSearchLoader();"/>           
+            <p:ajax event="rowSelect" listener="#{inventoryController.prepareViewInventory}" update=":mainForm:itemForm, :mainForm:itemList" onstart="hideItemsList();" oncomplete="PF('inventoryTable').clearFilters();"/>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value=""/>
+                </f:facet>
+                <h:outputText value=""/>
+            </p:column>
+
+            <p:column sortBy="#{item.product.description}" filterBy="#{item.product.description}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.Product}"/>
+                </f:facet>
+                <h:outputText value="#{item.product.description}"/>
+            </p:column>
+            <p:column sortBy="#{item.product.uom.name}" filterBy="#{item.product.uom.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.UnitOfMeasure}"/>
+                </f:facet>
+                <h:outputText value="#{item.product.uom.name}"/>
+            </p:column> 
+            <p:column sortBy="#{item.quantityOnHand}" filterBy="#{item.quantityOnHand}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.QuantityOnHand}"/>
+                </f:facet>
+                <h:outputText value="#{item.quantityOnHand}"/>
+            </p:column>
+            <p:column sortBy="#{item.unitCost}" filterBy="#{item.unitCost}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.AverageUnitCost}"/>
+                </f:facet>
+                #{messages.Currency}
+                <h:outputText value="#{item.quantityOnHand == 0 ? 0.0 : item.unitCost}"/>
+            </p:column>
+            <p:column sortBy="#{item.totalCost}" filterBy="#{item.totalCost}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.InventoryValue}"/>
+                </f:facet>
+                #{messages.Currency}
+                <h:outputText value="#{item.totalCost}"/>               
+            </p:column>
+
+        </p:dataTable>     
+    </div>  
+    <script>
+        function updateTable() {
+            addEmptyRows(tableId);
+            hidePaginator(tableId);
+        }
+
+        var tableId = '#{productTable.clientId}';
+        addEmptyRows(tableId);
+        hidePaginator(tableId);
+    </script>
+</ui:composition>

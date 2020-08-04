@@ -1,0 +1,207 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"> 
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <div class="form-nav">
+                <span class="form-nav-item">#{messages.VendorPayments}</span>  
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{supPaymentController.payment.name}</span>  
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{messages.Edit}</span>   
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <a class="waves-effect waves-light btn btn-icon btn-primary list-slider" onclick="listSliderClicked();">
+                <i class="fa fa-bars"/>
+            </a>
+            <div class="vertical-spacer"/>
+            <p:commandButton class="waves-effect waves-light btn btn-primary" value="#{messages.Save}" process=":mainForm:itemForm" actionListener="#{supPaymentController.updateSupPayment}"  update=":mainForm:itemForm, :mainForm:itemList"/> 
+            <p:commandButton class="waves-effect waves-light btn btn-primary" value="#{messages.Discard}" process="@this" actionListener="#{supPaymentController.cancelSupPaymentEdit}"  update=":mainForm:itemForm, :mainForm:itemList"/> 
+        </div>
+    </div>
+
+    <div class="row">  
+        <div class="col-md-10 col-md-offset-1 form-body card z-depth-2">
+            <div class="row">             
+                <div class="col-md-6">
+                    <div id="form-name">
+                        #{supPaymentController.payment.name}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="form-status" class="z-depth-1">
+                        <span>#{messages.Draft}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <p:outputLabel value="#{messages.PaymentType}" class="form-data-label font-2"/>
+                        </div> 
+                        <div class="col-md-7point5">
+                            <h:selectOneRadio value="#{supPaymentController.paymentType}" layout="pageDirection">
+                                <f:selectItem itemLabel="#{messages.ReceiveMoney}" itemValue="receive money" />
+                                <f:selectItem itemLabel="#{messages.SendMoney}" itemValue="send money" />                           
+                            </h:selectOneRadio> 
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <p:outputLabel value="#{messages.Vendor}" class="form-data-label font-2" for="partnerMenu"/>
+                        </div> 
+                        <div class="col-md-7point5">
+                            <p:selectOneMenu class="form-data-value font-1 required input-width-90" onchange="showPartnerList();" id="partnerMenu" widgetVar="partnerMenu" value="#{supPaymentController.payment.partner}" required="true" requiredMessage="#{messages.VendorRequired}" converter="partnerConverter">   
+                                <f:selectItem  itemLabel="&#160;" />
+                                <f:selectItems value="#{supPaymentController.topNSuppliers}"
+                                               var="partner"
+                                               itemValue="#{partner}"
+                                               itemLabel="#{partner.name.toString()}"/>
+                                <f:selectItem itemLabel="#{messages.SearchMore}" itemValue=""/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <p:outputLabel value="#{messages.PaymentMethod}" class="form-data-label font-2" for="paymentJournal"/>
+                        </div> 
+                        <div class="col-md-7point5">
+                            <p:selectOneMenu id="paymentJournal" class="form-data-value font-1 required input-width-90" value="#{supPaymentController.payment.journal}" required="true" requiredMessage="#{messages.PaymentMethodRequired}" converter="journalConverter">
+                                <f:selectItem  itemLabel="&#160;"/>
+                                <f:selectItems value="#{journalController.paymentJournals}"
+                                               var="journal"
+                                               itemValue="#{journal}"
+                                               itemLabel="#{journal.name.toString()}"/>
+                            </p:selectOneMenu> 
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <p:outputLabel value="#{messages.PaymentAmount}" class="form-data-label font-2" for="amount"/>
+                        </div> 
+                        <div class="col-md-7point5">
+                            #{messages.Currency}
+                            <p:spinner value="#{supPaymentController.payment.amount}" 
+                                       id="amount"
+                                       class="required"
+                                       required="true" 
+                                       min="0"                                                                       
+                                       stepFactor="#{messages.stepFactor}"                                                  
+                                       size="17"                                                        
+                                       requiredMessage="#{messages.PaidAmountRequired}" 
+                                       converterMessage="#{messages.InvalidPaidAmount}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-offset-point5 col-md-5point5">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <p:outputLabel value="#{messages.PaymentDate}" for="paymentDate" class="form-data-label font-2"/>
+                        </div> 
+                        <div class="col-md-7">
+                            <p:calendar id="paymentDate" styleClass="form-data-value font-1 required"  pattern="MM-dd-yyyy" value="#{supPaymentController.payment.date}"  required="true" requiredMessage="#{messages.DateRequired}" converterMessage="#{messages.InvalidDate}" locale="#{messages.CalendarLanguage}"/>                                                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+
+    <p:dialog id="PartnerListDialog" modal="true" styleClass="disable-scroll item-select-dialog" widgetVar="PartnerList"  resizable="false" closable="true"  appendTo="@(body)"  header="#{messages.SearchVendor}" width="#{messages.ItemSelectDialogWidth}" closeOnEscape="true">
+        <h:form>
+
+            <p:dataTable id="PartnerTable"
+                         class="fit-content-table"
+                         binding="#{partners}"
+                         value="#{vendorController.suppliers}"  
+                         filteredValue="#{vendorController.filteredPartners}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         paginatorAlwaysVisible="true"
+                         paginatorPosition="top"
+                         selection="#{supPaymentController.supplier}"
+                         selectionMode="single"
+                         widgetVar="PartnerTable"
+                         rows="#{messages.DialogMaxRows}">
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <div class="searchLoader">
+                            <p:graphicImage  name="/img/search-loader.gif"/>
+                        </div>
+                        <input type="text" jsf:id="globalFilter" jsf:onkeyup="PF('PartnerTable').filter()" class="search" placeholder="#{messages.Search}"/>               
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:ajax event="page" oncomplete="updateTable(partnersTableId);"/>
+                <p:ajax event="sort" oncomplete="updateTable(partnersTableId);"/>
+                <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="updateTable(partnersTableId); hideSearchLoader();"/>      
+                <p:ajax event="rowSelect" resetValues="true"  listener="#{supPaymentController.onSelectVendor}" onstart="PF('PartnerList').hide(); PF('PartnerTable').clearFilters();" update=":mainForm:partnerMenu"/>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value=""/>
+                    </f:facet>
+                    <h:outputText value=""/>
+                </p:column>
+
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.Name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+                <p:column sortBy="#{item.phone}" filterBy="#{item.phone}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.Phone}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.phone}"/>
+                </p:column>
+                <p:column sortBy="#{item.email}" filterBy="#{item.email}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.Email}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.email}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </p:dialog>
+
+    <script type="text/javascript">
+
+        $("#mainForm\\:partnerMenu_input option:first-of-type").attr("value", "");
+
+
+        function showPartnerList() {
+            $("#mainForm\\:partnerMenu_input option:first-of-type").attr("value", "");
+            if (PF('partnerMenu').getSelectedLabel() === '#{messages.SearchMore}') {
+                PF('partnerMenu').selectValue('');
+                PF('PartnerList').show();
+            }
+        }
+
+        function updateTable(tableId) {
+            addEmptyRows(tableId);
+        }
+
+        var partnersTableId = '#{partners.clientId}';
+        addEmptyRows(partnersTableId);
+
+    </script>
+
+</ui:composition>

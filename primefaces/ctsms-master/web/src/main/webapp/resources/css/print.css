@@ -1,0 +1,13 @@
+@media print {
+	body,html {
+		width: 100%;
+		/* transform: scale(.7); */
+	}
+	div {
+		overflow: visible !important;
+	}
+}
+@page {
+    size: auto;   /* auto is the initial value */
+    margin: 0;  /* this affects the margin in the printer settings */
+}

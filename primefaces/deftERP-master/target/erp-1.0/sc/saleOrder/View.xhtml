@@ -1,0 +1,371 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <ui:include src="/sc/confirmation.xhtml"/>
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar" jsf:rendered="#{empty saleOrderController.partialListType}" >
+            <div class="form-nav">
+                <span class="form-nav-item">#{messages.SalesOrders}</span>  
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{saleOrderController.saleOrder.name}</span>   
+            </div>
+        </div>
+        <div class="col-md-12 card z-depth-1 tool-bar" jsf:rendered="#{saleOrderController.partialListType == 'partner'}" >
+            <div class="form-nav">
+                <p:link  class="form-nav-item form-link" value="#{saleOrderController.saleOrder.partner.name}"  outcome="/sc/customer/index">
+                    <f:param name="id" value="#{saleOrderController.saleOrder.partner.id}"/>
+                </p:link> 
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{messages.SalesOrders}</span>  
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{saleOrderController.saleOrder.name}</span> 
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+
+            <a class="waves-effect waves-light btn btn-icon btn-primary list-slider" onclick="listSliderClicked();">
+                <i class="fa fa-bars"/>
+            </a>
+            <div class="vertical-spacer"/>
+            <p:commandButton
+                value="#{messages.ConfirmSale}" 
+                rendered="#{(saleOrderController.saleOrder.state == 'Quotation')}" 
+                class="waves-effect waves-light btn btn-primary"
+                actionListener="#{saleOrderController.confirmSale(saleOrderController.saleOrder.id)}" 
+                update=":mainForm:itemForm, :mainForm:itemList"/>
+            <p:commandButton  
+                value="#{messages.CreateInvoice}" 
+                rendered="#{(saleOrderController.saleOrder.state == 'To Invoice') and saleOrderController.saleOrder.invoiceMethod == 'Partial'}" 
+                class="waves-effect waves-light btn btn-primary"
+                actionListener="#{saleOrderController.prepareInvoicing(saleOrderController.saleOrder.id)}" 
+                oncomplete="if (!args.validationFailed) {PF('InvoiceLinesDialog').show()}"
+                update=":mainForm:itemForm, :mainForm:itemList, :invoicingForm"/>
+            <p:commandButton 
+                value="#{messages.CreateDeliveryOrder}"
+                rendered="#{saleOrderController.saleOrder.state != 'Quotation' and saleOrderController.saleOrder.state != 'Cancelled' and (saleOrderController.saleOrder.deliveryCreated != true)}" 
+                class="waves-effect waves-light btn btn-primary"
+                actionListener="#{saleOrderController.createDeliveryOrder(saleOrderController.saleOrder.id)}" 
+                update=":mainForm:itemForm, :mainForm:itemList"/>
+            <p:commandButton 
+                class="waves-effect waves-light btn btn-primary" 
+                value="#{messages.Edit}" 
+                actionListener="#{saleOrderController.prepareEdit(saleOrderController.saleOrder.id)}" 
+                update=":mainForm:itemForm, :mainForm:itemList" /> 
+            <p:commandButton 
+                class="waves-effect waves-light btn btn-primary" 
+                value="#{messages.Create}" 
+                actionListener="#{saleOrderController.prepareCreate}" 
+                update=":mainForm:itemForm, :mainForm:itemList" /> 
+            <p:commandButton 
+                class="waves-effect waves-light btn btn-primary" 
+                value="#{messages.Duplicate}" 
+                actionListener="#{saleOrderController.duplicateSaleOrder(saleOrderController.saleOrder.id)}" 
+                update=":mainForm:itemForm, :mainForm:itemList" />       
+            <p:commandButton  
+                value="#{messages.CancelOrder}" 
+                rendered="#{(saleOrderController.saleOrder.state != 'Cancelled') and (saleOrderController.saleOrder.state != 'Done')}" 
+                class="waves-effect waves-light btn btn-secondary"
+                actionListener="#{saleOrderController.cancelOrder(saleOrderController.saleOrder.id)}" 
+                update=":mainForm:itemForm, :mainForm:itemList"/>
+            <p:commandButton 
+                class="waves-effect waves-light btn btn-secondary" 
+                value="#{messages.Delete}" 
+                actionListener="#{saleOrderController.deleteOrder(saleOrderController.saleOrder.id)}" 
+                update=":mainForm:itemForm, :mainForm:itemList" /> 
+            <p:commandButton 
+                value="#{messages.Print}" 
+                ajax="false"
+                class="waves-effect waves-light btn btn-secondary"
+                process="@this"
+                actionListener="#{saleOrderController.printOrder}"/>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar item-dependencies">
+
+            <button class="btn btn-default" jsf:outcome="/sc/invoice/index" jsf:rendered="#{not empty saleOrderController.saleOrder.invoices}"> 
+                <f:param name="sale"  value="#{saleOrderController.saleOrder.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{saleOrderController.saleOrder.invoices.size()}</span>
+                    <span class="name">
+                        #{messages.Invoices}
+                    </span>
+                </div>  
+            </button> 
+            <button disabled="true" class="btn btn-default" jsf:rendered="#{(empty saleOrderController.saleOrder.invoices) and (saleOrderController.saleOrder.invoiceMethod == 'Complete')}"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.Invoices}
+                    </span>
+                </div>  
+            </button>
+            <button class="btn btn-default" jsf:outcome="/sc/deliveryOrder/index" jsf:rendered="#{not empty saleOrderController.saleOrder.deliveryOrders}"> 
+                <f:param name="sale"  value="#{saleOrderController.saleOrder.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{saleOrderController.saleOrder.deliveryOrders.size()}</span>
+                    <span class="name">
+                        #{messages.OutShipments}
+                    </span>
+                </div>  
+            </button>
+            <button class="btn btn-default" jsf:rendered="#{(saleOrderController.saleOrder.deliveryCreated == true) and (empty saleOrderController.saleOrder.deliveryOrders)}"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.OutShipments}
+                    </span>
+                </div>  
+            </button>
+        </div>
+    </div>
+
+    <div class="row">  
+        <div class="col-md-10 col-md-offset-1 form-body card z-depth-2">
+            <div class="row">
+                <div class="col-md-5">
+                    <div id="form-name">
+                        #{saleOrderController.saleOrder.name}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-pagination">
+                        <p:commandLink class="left-arrow" actionListener="#{saleOrderController.previousSaleOrder()}" process="@this" update=":mainForm:itemForm, :mainForm:itemList" oncomplete="setNextFormURL('id',formId)"> 
+                            <span class="fa fa-chevron-left" aria-hidden="true"/> 
+                        </p:commandLink>    
+                        <div class="form-number">
+                            <span>#{saleOrderController.saleOrderIndex} / #{saleOrderController.saleOrders.size()}</span>
+                        </div>
+                        <p:commandLink class="right-arrow" actionListener="#{saleOrderController.nextSaleOrder()}" process="@this" update=":mainForm:itemForm, :mainForm:itemList" oncomplete="setNextFormURL('id',formId)"> 
+                            <span class="fa fa-chevron-right" aria-hidden="true"/> 
+                        </p:commandLink> 
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div id="form-status"  class="z-depth-1">
+                        <span jsf:rendered="#{saleOrderController.saleOrder.state == 'Quotation'}">
+                            #{messages.DraftQuotation} 
+                        </span>
+                        <span jsf:rendered="#{saleOrderController.saleOrder.state == 'Cancelled'}">
+                            #{messages.Cancelled} 
+                        </span>
+                        <span jsf:rendered="#{(saleOrderController.saleOrder.state == 'To Invoice' or saleOrderController.saleOrder.state == 'Fully Invoiced')}">
+                            #{messages.SaleOrder} 
+                        </span>
+                        <span jsf:rendered="#{saleOrderController.saleOrder.state == 'Done'}">
+                            #{messages.Done} 
+                        </span>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5 form-data-label font-2">
+                            <span>#{messages.Customer}</span>
+                        </div> 
+                        <div class="col-md-7">
+                            <a  class="form-data-value font-1 form-link" value="#{saleOrderController.saleOrder.partner.name}"  jsf:outcome="/sc/customer/index">
+                                <f:param name="id" value="#{saleOrderController.saleOrder.partner.id}"/>
+                            </a>
+                            <h:outputText class="form-data-value font-1" value="#{saleOrderController.saleOrder.partner.street}"/>
+                            <h:outputText class="form-data-value font-1" value="#{saleOrderController.saleOrder.partner.city}"/>
+                            <h:outputText class="form-data-value font-1" value="#{saleOrderController.country}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5 form-data-label font-2">
+                            <span>#{messages.Date}</span>
+                        </div>
+                        <div class="col-md-7 form-data-value font-1">
+                            <h:outputText  value="#{saleOrderController.saleOrder.date}">
+                                <f:convertDateTime pattern="MM-dd-yyyy"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row form-lines">
+                <div class="col-md-12" >
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#form-tab-1" class="form-tab" role="tab" data-toggle="tab">#{messages.OrderLines}</a></li>
+                        <li><a href="#form-tab-2" role="tab" class="form-tab" data-toggle="tab">#{messages.OtherInfo}</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="form-tab-1">
+
+                            <p:dataTable id="invoiceLines"
+                                         binding="#{saleLines}"
+                                         class="fit-content-table"
+                                         value="#{saleOrderController.saleOrder.saleOrderLines}"
+                                         var="item">
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:outputText value=""/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.Product}"/>
+                                    </f:facet>
+                                    <p:link  class="form-link" value="#{item.product.description}"  outcome="/sc/product/index">
+                                        <f:param name="id" value="#{item.product.id}"/>
+                                    </p:link>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.Quantity}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.quantity}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.UnitOfMeasure}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.uom}"/>
+                                </p:column> 
+                                
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.UnitPrice}"/>
+                                    </f:facet>                                   
+                                    <h:outputText value="#{messages.Currency} #{item.price}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.Invoiced}"/>
+                                    </f:facet>
+                                    <p:selectBooleanCheckbox value="#{item.invoiced}" disabled="true"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.Tax}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.tax.name}"/>
+                                </p:column>         
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.Discount}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.discount}"/>
+                                </p:column>
+                                <p:column >
+                                    <f:facet name="header">
+                                        <h:outputText class="font-5 last-column" value="#{messages.SubTotal}"/>
+                                    </f:facet>                                     
+                                    <h:outputText class="font-5 last-column" value="#{messages.Currency} #{item.subTotal}"/>
+                                </p:column>
+                            </p:dataTable>    
+
+                            <div class="row form-totals">
+                                <div class="col-md-offset-7 col-md-5">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-7">
+                                            <h:outputText class="font-1" value="#{messages.UntaxedAmount}"/>
+                                        </div> 
+                                        <div class="col-md-5">
+                                            <h:outputText class="font-1" id="amountUntaxed" value="#{messages.Currency} #{saleOrderController.saleOrder.amountUntaxed}"/>                       
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-7">
+                                            <h:outputText class="font-1" value="#{messages.Taxes}"/>
+                                        </div> 
+                                        <div class="col-md-5">
+                                            <h:outputText class="font-1" id="amountTax" value="#{messages.Currency} #{saleOrderController.saleOrder.amountTax}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-data-2">
+                                        <div class="col-md-7 form-data-label">
+                                            <h:outputText class="font-3" value="#{messages.Total}"/>
+                                        </div> 
+                                        <div class="col-md-5 form-data-value">
+                                            <h:outputText class="font-3" id="amountTotal" value="#{messages.Currency} #{saleOrderController.saleOrder.amountTotal}"/>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h:outputText id="notes" value="#{saleOrderController.saleOrder.notes}"/>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="form-tab-2">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-data-1 line-breaks-3">
+                                        <div class="col-md-5 form-data-label font-2">
+                                            <span class="form-value">#{messages.Delivered}</span>
+                                        </div>
+                                        <div class="col-md-7 form-data-value">
+                                            <p:selectBooleanCheckbox id="shipped" value="#{saleOrderController.saleOrder.shipped}" disabled="true"/>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-data-1 line-breaks-3">
+                                        <div class="col-md-5 form-data-label font-2">
+                                            <span>#{messages.Paid}</span>
+                                        </div>
+                                        <div class="col-md-7 form-data-value">
+                                            <p:selectBooleanCheckbox id="paid" value="#{saleOrderController.saleOrder.paid}" disabled="true" />
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>    
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+
+    <script type="text/javascript">
+
+        var tableId = '#{saleLines.clientId}';
+        addEmptyRow(tableId);
+
+        var formId = "#{saleOrderController.saleOrder.id}";
+        setFormURL('id', formId);
+
+        setActiveTab();
+    </script>
+
+
+
+
+
+</ui:composition>

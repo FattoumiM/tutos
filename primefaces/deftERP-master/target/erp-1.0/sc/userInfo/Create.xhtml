@@ -1,0 +1,145 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"> 
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <div class="form-nav">
+                <span class="form-nav-item">#{messages.Users}</span>  
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{messages.New}</span>   
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <a class="waves-effect waves-light btn btn-icon btn-primary list-slider" onclick="listSliderClicked();">
+                <i class="fa fa-bars"/>
+            </a>
+            <div class="vertical-spacer"/> 
+            <h:commandButton id="saveBtn" action="#{userController.createUser}"  value="#{messages.Save}" styleClass="waves-effect waves-light btn btn-primary">
+                <f:ajax execute="@form"  render=":mainForm:itemForm :mainForm:itemList"/> 
+            </h:commandButton>
+            <p:commandButton class="waves-effect waves-light btn btn-primary" value="#{messages.Discard}" process="@this" actionListener="#{userController.cancelCreateUser}"  update=":mainForm:itemForm, :mainForm:itemList"/> 
+        </div>
+    </div>
+
+    <div class="row">  
+        <div class="col-md-10 col-md-offset-1 form-body card z-depth-2" style="padding-top: 32px; padding-bottom: 100px;">
+            <div class="row line-breaks-3">
+                <div class="col-md-12">
+                    <p:graphicImage  value="#" name="img/partnerPlaceholder.png"  binding="#{altImage}" style="display: none;" />
+                    <h:inputFile style="display:none;"  id="pictureUpload" value="#{userController.image}" binding="#{upload}" validator="#{userController.validateImage}" />
+                    <div class="form_image">
+                        <p:graphicImage  value="#" name="img/placeholder.png"  binding="#{image}" />
+                        <div class="form_image_buttons" style="position: absolute; width: 100%;">
+                            <a class="fa fa-pencil form_image_edit" id="upload_link"/>
+                            <a class="fa fa-trash-o form_image_remove" id="remove_link"/> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <p:outputLabel value="#{messages.FullName}" class="form-data-label font-2" for="fullName"/>
+                        </div> 
+                        <div class="col-md-7point5">
+                            <p:inputText id="fullName" value="#{userController.user.name}" class="form-data-value font-1 input-width-90 required" required="true" requiredMessage="#{messages.FullNameRequired}" maxlength="55"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <p:outputLabel value="#{messages.UserType}" for="userType" class="form-data-label font-2"/>
+                        </div> 
+                        <div class="col-md-7point5">
+                            <p:selectOneMenu class="form-data-value font-1 input-width-90 required" id="userType" value="#{userController.user.userType}" required="true" requiredMessage="#{messages.UserTypeRequired}">   
+                                <f:selectItem  itemLabel="&#160;" />
+                                <f:selectItems value="#{userController.userTypes}"
+                                               var="userType"
+                                               itemValue="#{userType}"
+                                               itemLabel="#{userType.toString()}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-offset-point5 col-md-5point5">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <p:outputLabel value="#{messages.UserName}" for="userName" class="form-data-label font-2"/>
+                        </div> 
+                        <div class="col-md-7">
+                            <p:inputText id="userName" value="#{userController.user.login}" class="form-data-value font-1 input-width-90 required" required="true" requiredMessage="#{messages.UserNameRequired}" maxlength="55"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <p:outputLabel value="#{messages.Password}" for="password" class="form-data-label font-2"/>
+                        </div> 
+                        <div class="col-md-7">
+                            <p:inputText id="password" value="#{userController.user.password}" class="form-data-value font-1 input-width-90 required" required="true" requiredMessage="#{messages.PasswordRequired}" maxlength="55"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <p:outputLabel value="#{messages.Active}" for="active" class="form-data-label font-2"/>
+                        </div> 
+                        <div class="col-md-7">
+                            <p:selectBooleanCheckbox id="active" value="#{userController.user.active}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("#upload_link").on('click', function (e) {
+                e.preventDefault();
+                $("#mainForm\\:pictureUpload:hidden").trigger('click');
+            });
+        });
+
+        $(function () {
+            $("#remove_link").on('click', function (e) {
+                e.preventDefault();
+                var source = $("[id='#{altImage.clientId}']").attr('src');
+                $("[id='#{image.clientId}']").attr('src', source);
+                $("[id='#{upload.clientId}']").val('');
+            });
+        });
+
+        function readPicture(input, output) {
+            if (input.files)
+            {
+                if (input.files[0])
+                {
+                    var reader = new FileReader();
+                    reader.onload = function (e)
+                    {
+                        output.attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        }
+
+        $("[id='#{upload.clientId}']").change(
+                function () {
+                    readPicture(this, $("[id='#{image.clientId}']"));
+                }
+        );
+
+        setListURL();
+    </script>
+
+</ui:composition>

@@ -1,0 +1,128 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    
+
+
+    <div class="row"> 
+        <p:dataTable id="productPurchaseOrders"
+                     binding="#{productPurchaseOrders}"
+                     class="fit-content-table"
+                     value="#{purchaseOrderController.purchaseOrderLines}"
+                     filteredValue="#{purchaseOrderController.filteredPurchaseOrderLines}"
+                     var="item"
+                     selection="#{purchaseOrderController.purchaseOrderLine}"
+                     rowKey="#{item.id}"
+                     paginator="true"
+                     paginatorAlwaysVisible="false"
+                     widgetVar="productPurchaseOrders"
+                     selectionMode="single"
+                     rows="#{messages.MaxRows}">
+
+
+            <f:facet name="header" class="card z-depth-1">
+                <p:outputPanel>
+                    <div class="form-nav" style="float:left; margin-top: 4px;">
+                        <p:link  class="form-nav-item form-link" value="#{purchaseOrderController.purchaseOrderLines[0].product.name}"  outcome="/sc/product/index">
+                            <f:param name="id" value="#{purchaseOrderController.productId}"/>
+                        </p:link>
+                        <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i> 
+                        <span class="form-nav-item"> #{messages.PurchaseOrderLines}</span> 
+                    </div>
+                    <div class="searchLoader">
+                        <p:graphicImage  name="/img/search-loader.gif"/>
+                    </div>
+                    <input type="text" jsf:id="globalFilter" jsf:onkeyup="PF('productPurchaseOrders').filter()" class="search"
+                           onkeypress="if (event.keyCode == 13) {
+                                       return false
+                                   }
+                                   ;" placeholder="#{messages.Search}"/>               
+                </p:outputPanel> 
+            </f:facet>
+
+            <p:ajax event="page" oncomplete="updateTableTotals();"/>
+            <p:ajax event="sort" oncomplete="updateTableTotals();"/>
+            <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="updateTableTotals(); hideSearchLoader();"/>
+            <p:ajax event="rowSelect" listener="#{purchaseOrderController.prepareViewOrderByProduct}" update=":mainForm:itemForm, :mainForm:itemList" onstart="hideItemsList();"/>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value=""/>
+                </f:facet>
+                <h:outputText value=""/>
+            </p:column>
+
+            <p:column sortBy="#{item.product.name}" filterBy="#{item.product.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.Product}"/>
+                </f:facet>
+                <h:outputText value="#{item.product.name}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.purchaseOrder.name}" filterBy="#{item.purchaseOrder.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.PurchaseOrder}"/>
+                </f:facet>
+                <h:outputText value="#{item.purchaseOrder.name}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.purchaseOrder.partner.name}" filterBy="#{item.purchaseOrder.partner.name}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.Vendor}"/>
+                </f:facet>
+                <h:outputText value="#{item.purchaseOrder.partner.name}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.quantity}" filterBy="#{item.quantity}" styleClass="quantity">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.Quantity}"/>
+                </f:facet>
+                <h:outputText value="#{item.quantity}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.subTotal}" filterBy="#{item.subTotal}" styleClass="amount">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.SubTotal}"/>
+                </f:facet>
+                <h:outputText value="#{messages.Currency} #{item.subTotal}"/>
+            </p:column>
+            <p:column sortBy="#{item.invoiced}" filterBy="#{item.invoiced}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.Invoiced}"/>
+                </f:facet>
+                <p:selectBooleanCheckbox value="#{item.invoiced}" disabled="true"/>
+            </p:column>
+            <p:columnGroup type="footer">
+                <p:row styleClass="tableFoot">
+                    <p:column colspan="4"/>
+                    <p:column  styleClass="total-quantity"/>
+                    <p:column  styleClass="total-amount"/>
+                    <p:column/>
+                </p:row>
+            </p:columnGroup>
+        </p:dataTable>  
+    </div>  
+    <script>
+
+        function updateTableTotals() {
+            addEmptyRows(tableId);
+            columnSum('amount', 'total-amount');
+            columnSumNonCurrency('quantity', 'total-quantity');
+            hidePaginator(tableId);
+        }
+
+        var tableId = '#{productPurchaseOrders.clientId}';
+        addEmptyRows(tableId);
+        columnSum('amount', 'total-amount');
+        columnSumNonCurrency('quantity', 'total-quantity');
+        hidePaginator(tableId);
+
+
+    </script>
+</ui:composition>

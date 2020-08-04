@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>course search</title>
+</h:head>
+<h:body>
+	<ui:composition template="/META-INF/templates/courseHomeTemplate.xhtml">
+		<ui:param
+			name="title"
+			value="#{courseSearchBean.title}" />
+		<ui:define name="head">
+			<h:outputStylesheet
+				name="mimetypes.min.css"
+				library="css"
+				target="head" />		
+			<h:outputStylesheet
+				name="search.min.css"
+				library="css"
+				target="head" />
+			<h:outputStylesheet
+				name="course.min.css"
+				library="css"
+				target="head" />
+			<h:outputScript
+				name="d3.v4.min.js"
+				library="js"
+				target="head" />
+			<h:outputScript
+				name="venn.min.js"
+				library="js"
+				target="head" />				
+			<h:outputScript
+				name="course.min.js"
+				library="js"
+				target="head" />
+			<h:outputScript
+				name="search.min.js"
+				library="js"
+				target="head" />
+		</ui:define>
+		<ui:define name="content">
+			<h:form id="search_form" onkeypress="#{autoCompleteForceSelectionPreventFormSubmission}">
+				<h:panelGrid
+					columns="1"
+					cellpadding="0"
+					styleClass="ctsms-content-panelgrid">
+					<p:panel>
+						<f:facet name="header">
+							<h:outputText value="#{courseSearchBean.searchTitle}" />
+						</f:facet>
+						<ui:decorate template="/META-INF/includes/shared/courseSearcher.xhtml">
+							<ui:define name="toolbarbuttons">
+								<p:splitButton immediate="true" ajax="false"
+									value="#{labels.search_export_results_button_label}"
+									process="@this,:search_form:tabView:criteria_input"
+									disabled="#{!courseSearchBean.enableExports}"
+									icon="ui-icon ui-icon-xls">
+									<p:fileDownload
+										value="#{courseSearchBean.excelStreamedContent}" />
+									<p:menuitem immediate="true" ajax="false"
+										value="#{courselabels.search_open_course_participant_lists_button_label}"
+										process="@this,:search_form:tabView:criteria_input"
+										disabled="#{!courseSearchBean.enableExports}"
+										icon="ctsms-menubar-icon ctsms-icon-pdf">
+										<p:fileDownload value="#{courseSearchBean.courseParticipantListPdfStreamedContent}" />
+									</p:menuitem>
+								</p:splitButton>	
+							</ui:define>
+							<ui:define name="pickbutton">
+								<p:column style="width:32px;">
+									<p:commandButton
+										title="#{labels.open_course_button_label}"
+										type="button"
+										icon="ui-icon ui-icon-extlink"
+										onclick="openCourse(#{course.vo.id})" />
+								</p:column>
+							</ui:define>
+						</ui:decorate>
+					</p:panel>
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

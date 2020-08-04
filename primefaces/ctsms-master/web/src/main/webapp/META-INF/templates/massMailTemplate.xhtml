@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>mass mail template</title>
+</head>
+<body>
+	<ui:composition template="moduleTemplate.xhtml">
+		<ui:define name="head">
+			<h:outputStylesheet
+				name="massMail.min.css"
+				library="css"
+				target="head" />
+			<h:outputStylesheet
+				name="mimetypes.min.css"
+				library="css"
+				target="head" />
+			<h:outputScript
+				name="massMail.min.js"
+				library="js"
+				target="head" />
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -1,0 +1,98 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:o="http://omnifaces.org/ui">
+
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">          
+            <div class="form-nav">
+                <span class="form-nav-item">#{messages.Products}</span>
+            </div>
+            <p:commandLink actionListener="#{productController.showProductList()}" oncomplete="listSliderClicked();" process="@this" update=":mainForm:itemList" class="waves-effect waves-light btn btn-icon btn-primary float-right" style="margin-top: 4px; margin-bottom: 4px;"> 
+                <i class="fa fa-bars" aria-hidden="true"/> 
+            </p:commandLink>      
+        </div>
+        <div class="col-md-12 card z-depth-1 tool-bar" style="padding: 4px; padding-left: 8px;">          
+            <div class="col-md-3">
+                <h:commandButton rendered="false" action="#{productController.prepareCreateProduct}" value="#{messages.Create}" styleClass="waves-effect waves-light btn btn-primary">
+                    <f:ajax execute="@this" render=":mainForm:itemForm, :mainForm:itemList"/> 
+                </h:commandButton>  
+                <p:commandButton update=":mainForm:itemForm, :mainForm:itemList" process="@this" actionListener="#{productController.prepareCreateProduct}" value="#{messages.Create}"  styleClass="waves-effect waves-light btn btn-primary"/> 
+            </div>
+            <div class="col-md-9" style="padding-right: 5px !important;">
+                <div style="float:right;">                
+                    <div class="searchLoader" style="padding-right: 5px;">
+                        <p:graphicImage  name="/img/search-loader.gif" style="margin-top: 3px; vertical-align: middle;"/>
+                    </div>              
+                    <h:inputText value="#{productController.searchKey}" id="gridFilter" 
+                                 onkeypress="if (event.keyCode === 13) {
+                                             return false;
+                                         }"
+                                 class="search" pass:placeholder="#{messages.Search}">
+                        <p:ajax  global="false" delay="500"  event="keyup" listener="#{productController.searchByName}" process="@this" update=":mainForm:gridView" onstart="showSearchLoader();" oncomplete="updateGrid(); hideSearchLoader();"/>
+                    </h:inputText>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row"> 
+        <p:dataGrid   id="gridView"  
+                      styleClass="z-depth-1"
+                      var="product" 
+                      binding="#{productsGrid}"
+                      value="#{productController.products}"
+                      columns="3" 
+                      emptyMessage="#{messages.EmptyMessage}"
+                      rowIndexVar="rowIndex"
+                      paginatorAlwaysVisible="true"
+                      layout="grid"
+                      rows="#{messages.GridMaxRows}"   
+                      paginator="true" 
+                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+            <p:ajax event="page" oncomplete="updateGrid();"/>
+            <p:commandLink class="data-grid-link" actionListener="#{productController.prepareViewProduct(product.id)}" process="@this" update=":mainForm:itemForm, :mainForm:itemList">
+                <div class="data-grid">
+                    <p:graphicImage rendered="#{product.image == null}"  class="data-grid_image"   value="#" name="img/placeholder.png"/>
+                    <o:graphicImage rendered="#{product.image != null}" class="data-grid_image"  value="#{product.image}" dataURI="true"/>
+                    <div class="data-grid_details">
+                        <ul>
+                            <li class="data-grid_details-heading text_overflow">#{product.description}</li>
+                            <li>
+                                #{messages.Price}: 
+                                #{messages.Currency}
+                                <h:outputText value="#{product.salePrice}"/>
+                            </li>
+                            <li>
+                                #{messages.OnHand}: #{product.inventory.quantityOnHand} #{product.uom.name}
+                            </li>
+                            <li>
+                                #{messages.Forecasted}: #{product.inventory.quantityAvailable} #{product.uom.name}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </p:commandLink>
+        </p:dataGrid>  
+    </div>  
+    <script>
+
+        var tableId = '#{productsGrid.clientId}';
+        hideGridPaginator(tableId);
+        $('.ui-datagrid-content').css('min-height', $(window).height());
+        function updateGrid() {
+            $('.ui-datagrid-content').css('min-height', $(window).height());
+            tableId = '#{productsGrid.clientId}';
+            hideGridPaginator(tableId);
+        }
+
+    </script>
+</ui:composition>

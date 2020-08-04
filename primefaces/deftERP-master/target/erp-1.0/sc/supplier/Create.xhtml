@@ -1,0 +1,375 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:o="http://omnifaces.org/ui">
+
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <div class="form-nav">
+                <span jsf:rendered="#{vendorController.partnerType == 'Vendor'}" styleClass="form-nav-item">#{messages.Vendors}</span> 
+                <span jsf:rendered="#{vendorController.partnerType == 'Customer'}" styleClass="form-nav-item">#{messages.Customers}</span> 
+                <span jsf:rendered="#{vendorController.partnerType == 'Partner'}" styleClass="form-nav-item">#{messages.Partners}</span> 
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span>#{messages.New}</span>
+            </div>
+        </div>  
+    </div> 
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <a class="waves-effect waves-light btn btn-icon btn-primary list-slider" onclick="listSliderClicked();">
+                <i class="fa fa-bars"/>
+            </a>
+            <div class="vertical-spacer"/>
+            <h:commandButton 
+                id="saveBtn" 
+                action="#{vendorController.createSupplier}"  
+                value="#{messages.Save}" 
+                styleClass="waves-effect waves-light btn btn-primary">
+                <f:ajax execute="@form" render=":mainForm:itemForm :mainForm:itemList"/> 
+            </h:commandButton>
+            <p:commandButton  
+                process="@this" 
+                styleClass="waves-effect waves-light btn btn-primary" 
+                value="#{messages.Discard}" 
+                actionListener="#{vendorController.cancelCreate}" 
+                update=":mainForm:itemForm, :mainForm:itemList"/>
+        </div> 
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar item-dependencies">
+
+            <button class="btn btn-default customerButton" disabled="true"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.OutShipments}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" disabled="true"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.InShipments}
+                    </span>
+                </div>  
+            </button>      
+            <button class="btn btn-default customerButton" disabled="true" > 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.CustomerPay}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" disabled="true"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.VendorPayments}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default customerButton" disabled="true"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.CustomerInv}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" disabled="true"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.VendorBills}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default customerButton" disabled="true"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.Sales}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" disabled="true"> 
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">0</span>
+                    <span class="name">
+                        #{messages.Purchases}
+                    </span>
+                </div>  
+            </button> 
+        </div>
+    </div>
+
+    <div class="row">  
+        <div class="col-md-10 col-md-offset-1 form-body card z-depth-2">
+            <div class="row" style="margin-bottom: 26px;"> 
+                <div class="col-md-1point5">
+                    <p:graphicImage  value="#" name="img/partnerPlaceholder.png"  binding="#{altImage}" style="display: none;"/>
+                    <h:inputFile style="display:none;"  id="pictureUpload" value="#{vendorController.image}" binding="#{upload}" validator="#{vendorController.validateImage}" />
+                    <div class="form_image">
+                        <p:graphicImage  value="#" name="img/placeholder.png"  binding="#{image}" />
+                        <div class="form_image_buttons" style="position: absolute; width: 100%;">
+                            <a class="fa fa-pencil form_image_edit" id="upload_link"/>
+                            <a class="fa fa-trash-o form_image_remove" id="remove_link"/> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5" style="margin-top: 55px;"> 
+                    <p:inputText id="name" value="#{vendorController.partner.name}" class="required form-name-input input-width-100" placeholder="#{messages.Name}" required="true" requiredMessage="#{messages.PartnerNameRequired}" maxlength="50"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <span class="form-data-label font-2">#{messages.Address}</span>
+                        </div> 
+                        <div class="col-md-7point5">
+                            <p:inputText id="street" class="input-width-90" value="#{vendorController.partner.street}" placeholder="#{messages.Street}"  maxlength="55"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5"/>
+                        <div class="col-md-7point5">
+                            <p:inputText id="city" class="input-width-90" value="#{vendorController.partner.city}" placeholder="#{messages.City}"  maxlength="35"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5"/>
+                        <div class="col-md-7point5">
+                            <p:selectOneMenu  class="input-width-90" filter="true" value="#{vendorController.partner.country}" >
+                                <f:selectItem  itemLabel="&#160;" />
+                                <f:selectItems value="#{vendorController.countries.entrySet()}" 
+                                               var="entry" 
+                                               itemValue="#{entry.key}" 
+                                               itemLabel="#{entry.value}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-4point5">
+                            <span class="form-data-label font-2">#{messages.Website}</span>
+                        </div>
+                        <div class="col-md-7point5">
+                            <p:inputText id="website" class="input-width-90" value="#{vendorController.partner.website}" maxlength="50"/>
+                        </div>
+                    </div>        
+                </div>
+                <div class="col-md-offset-point5 col-md-5point5">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.Phone}</span>
+                        </div> 
+                        <div class="col-md-7">
+                            <p:inputText id="phone" class="input-width-90" value="#{vendorController.partner.phone}"  maxlength="25"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-value font-2">#{messages.Mobile}</span> 
+                        </div>
+                        <div class="col-md-7">
+                            <p:inputText id="mobile" class="input-width-90" value="#{vendorController.partner.mobile}"  maxlength="25"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-value font-2">#{messages.Fax}</span> 
+                        </div>
+                        <div class="col-md-7">
+                            <p:inputText id="fax" class="input-width-90" value="#{vendorController.partner.fax}"  maxlength="25"/>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-value font-2">#{messages.Email}</span> 
+                        </div>
+                        <div class="col-md-7">
+                            <p:inputText id="email" class="input-width-90" value="#{vendorController.partner.email}" maxlength="35"/>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#form-tab-1" class="form-tab" role="tab" data-toggle="tab">#{messages.OtherInfo}</a></li>
+                        <li><a href="#form-tab-2" role="tab" class="form-tab" data-toggle="tab">#{messages.Accounting}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="form-tab-1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.IsACustomer}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectBooleanCheckbox widgetVar="isCustomer" id="isCustomer" value="#{vendorController.partner.customer}" onchange="updateCustomerButtonsDisplay();"/>
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.IsAVendor}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectBooleanCheckbox widgetVar="isSupplier" id="isSupplier" value="#{vendorController.partner.supplier}"  onchange="updateSupplierButtonsDisplay();"/>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Date}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:calendar 
+                                                id="Date" 
+                                                class="required input-width-90" 
+                                                pattern="MM-dd-yyyy" 
+                                                value="#{vendorController.partner.createDate}" 
+                                                required="true" 
+                                                requiredMessage="#{messages.DateRequired}"
+                                                converterMessage="#{messages.InvalidDate}" 
+                                                locale="#{messages.CalendarLanguage}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Active}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectBooleanCheckbox id="active" value="#{vendorController.partner.active}"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>      
+                        </div> 
+                        <div class="tab-pane" id="form-tab-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.AccountReceivable}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectOneMenu id="accountReceivable" class="required input-width-90" value="#{vendorController.partner.accountReceivable}" required="true" requiredMessage="#{messages.accountReceivableRequired}" converter="accountConverter" >   
+                                                <f:selectItem  itemLabel="&#160;" />
+                                                <f:selectItems value="#{vendorController.receivableAccounts}"
+                                                               var="account"
+                                                               itemValue="#{account}"
+                                                               itemLabel="#{account.name.toString()}"/>
+                                            </p:selectOneMenu> 
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Receivables}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h:outputText value="#{messages.Currency} #{0.0}"/>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class ="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.AccountPayable}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectOneMenu id="accountPayable"  class="required input-width-90" value="#{vendorController.partner.accountPayable}" required="true" requiredMessage="#{messages.accountPayableRequired}" converter="accountConverter" >   
+                                                <f:selectItem  itemLabel="&#160;" />
+                                                <f:selectItems value="#{vendorController.payableAccounts}"
+                                                               var="account"
+                                                               itemValue="#{account}"
+                                                               itemLabel="#{account.name.toString()}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Payables}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h:outputText value="#{messages.Currency} #{0.0}"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>         
+                        </div>
+                    </div> 
+                </div> 
+            </div>         
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+        setListURL();
+        updateCustomerButtonsDisplay();
+        updateSupplierButtonsDisplay();
+
+        $(function () {
+            $("#upload_link").on('click', function (e) {
+                e.preventDefault();
+                $("#mainForm\\:pictureUpload:hidden").trigger('click');
+            });
+        });
+
+        $(function () {
+            $("#remove_link").on('click', function (e) {
+                e.preventDefault();
+                var source = $("[id='#{altImage.clientId}']").attr('src');
+                $("[id='#{image.clientId}']").attr('src', source);
+                $("[id='#{upload.clientId}']").val('');
+            });
+        });
+
+        function readPicture(input, output) {
+            if (input.files)
+            {
+                if (input.files[0])
+                {
+                    var reader = new FileReader();
+                    reader.onload = function (e)
+                    {
+                        output.attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        }
+
+        $("[id='#{upload.clientId}']").change(
+                function () {
+                    readPicture(this, $("[id='#{image.clientId}']"));
+                }
+        );
+
+        setActiveTab();
+
+    </script>
+
+</ui:composition>

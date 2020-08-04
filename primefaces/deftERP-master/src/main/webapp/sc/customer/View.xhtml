@@ -1,0 +1,346 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:o="http://omnifaces.org/ui">
+
+
+    <ui:include src="/sc/confirmation.xhtml"/>
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <div class="form-nav">
+                <span jsf:rendered="#{customerController.partnerType == 'Vendor'}" styleClass="form-nav-item">#{messages.Vendors}</span> 
+                <span jsf:rendered="#{customerController.partnerType == 'Customer'}" styleClass="form-nav-item">#{messages.Customers}</span> 
+                <span jsf:rendered="#{customerController.partnerType == 'Partner'}" styleClass="form-nav-item">#{messages.Partners}</span> 
+                <i class="fa fa-chevron-circle-right form-nav-icon" aria-hidden="true"></i>
+                <span class="form-nav-item">#{customerController.partner.name}</span>   
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar">
+            <a class="waves-effect waves-light btn btn-icon btn-primary list-slider" onclick="listSliderClicked();">
+                <i class="fa fa-bars"/>
+            </a>
+            <div class="vertical-spacer"/>
+            <h:commandButton rendered="false" action="#{customerController.prepareCreateCustomer}" value="#{messages.Create}" styleClass="waves-effect waves-light btn btn-primary">
+                <f:ajax execute="@this" render=":mainForm:itemForm, :mainForm:itemList"/> 
+            </h:commandButton>
+            <h:commandButton rendered="false" action="#{customerController.prepareEditCustomer}" value="#{messages.Edit}" styleClass="waves-effect waves-light btn btn-primary">
+                <f:ajax execute="@this" render=":mainForm:itemForm, :mainForm:itemList"/> 
+            </h:commandButton>
+
+            <p:commandButton 
+                update=":mainForm:itemForm, :mainForm:itemList" 
+                process="@this" 
+                actionListener="#{customerController.prepareEditCustomer}" 
+                value="#{messages.Edit}"  
+                styleClass="waves-effect waves-light btn btn-primary"/> 
+            <p:commandButton 
+                update=":mainForm:itemForm, :mainForm:itemList" 
+                process="@this" 
+                actionListener="#{customerController.prepareCreateCustomer}" 
+                value="#{messages.Create}"  
+                styleClass="waves-effect waves-light btn btn-primary"/>
+            <p:commandButton 
+                update=":mainForm:itemForm, :mainForm:itemList" 
+                process="@this" 
+                actionListener="#{customerController.deleteCustomer(customerController.partner.id)}" 
+                value="#{messages.Delete}"  
+                styleClass="waves-effect waves-light btn btn-secondary"/> 
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 card z-depth-1 tool-bar item-dependencies">
+            
+            <button class="btn btn-default customerButton" jsf:outcome="/sc/deliveryOrder/index" jsf:disabled="#{(customerController.countOutShipments() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p"  value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countOutShipments()}</span>
+                    <span class="name">
+                        #{messages.OutShipments}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" jsf:outcome="/sc/supDeliveryOrder/index" jsf:disabled="#{(customerController.countInShipments() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p" value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countInShipments()}</span>
+                    <span class="name">
+                        #{messages.InShipments}
+                    </span>
+                </div>  
+            </button>      
+            <button class="btn btn-default customerButton" jsf:outcome="/sc/payment/index" jsf:disabled="#{(customerController.countCustomerPayments() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p"  value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countCustomerPayments()}</span>
+                    <span class="name">
+                        #{messages.CustomerPay}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" jsf:outcome="/sc/supPayment/index" jsf:disabled="#{(customerController.countSupplierPayments() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p"  value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countSupplierPayments()}</span>
+                    <span class="name">
+                        #{messages.VendorPayments}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default customerButton" jsf:outcome="/sc/invoice/index" jsf:disabled="#{(customerController.countCustomerInvoices() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p"  value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countCustomerInvoices()}</span>
+                    <span class="name">
+                        #{messages.CustomerInv}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" jsf:outcome="/sc/supInvoice/index" jsf:disabled="#{(customerController.countSupplierInvoices() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p"  value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countSupplierInvoices()}</span>
+                    <span class="name">
+                        #{messages.VendorBills}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default customerButton" jsf:outcome="/sc/saleOrder/index" jsf:disabled="#{(customerController.countSaleOrders() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p"  value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countSaleOrders()}</span>
+                    <span class="name">
+                        #{messages.Sales}
+                    </span>
+                </div>  
+            </button> 
+            <button class="btn btn-default vendorButton" jsf:outcome="/sc/purchaseOrder/index" jsf:disabled="#{(customerController.countPurchaseOrders() > 0) ? 'false' : 'true'}"> 
+                <f:param name="p"  value="#{customerController.partner.id}"/>
+                <span class="fa fa-bars icon z-depth-1"/>
+                <div>
+                    <span class="num">#{customerController.countPurchaseOrders()}</span>
+                    <span class="name">
+                        #{messages.Purchases}
+                    </span>
+                </div>  
+            </button> 
+        </div>
+    </div>
+
+    <div class="row">  
+        <div class="col-md-10 col-md-offset-1 form-body card z-depth-2">          
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-pagination">
+                        <p:commandLink class="left-arrow" actionListener="#{customerController.previousPartner}" process="@this" update=":mainForm:itemForm, :mainForm:itemList" oncomplete="setNextFormURL('id',formId)"> 
+                            <span class="fa fa-chevron-left" aria-hidden="true"/> 
+                        </p:commandLink>    
+                        <div class="form-number">
+                            <span>#{customerController.partnerIndex} / #{customerController.customers.size()}</span>
+                        </div>
+                        <p:commandLink class="right-arrow" actionListener="#{customerController.nextPartner}" process="@this" update=":mainForm:itemForm, :mainForm:itemList" oncomplete="setNextFormURL('id',formId)"> 
+                            <span class="fa fa-chevron-right" aria-hidden="true"/> 
+                        </p:commandLink> 
+                    </div>
+                </div>
+            </div>
+            <div class="row line-breaks-3">
+                <div class="col-md-1point5">
+                    <span class="form_image">
+                        <p:graphicImage rendered="#{customerController.partner.image == null}"  value="#" name="#{customerController.getFormDefaultImage()}"  />
+                        <o:graphicImage rendered="#{customerController.partner.image != null}"  value="#{customerController.partner.image}" dataURI="true" />
+                    </span>
+                </div>
+                <div class="col-md-10point5" style="margin-top: 32px; padding-right: 0px !important;"> 
+                    <h:outputText class="form-name-1" value="#{customerController.partner.name}"/>
+                </div>  
+            </div> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.Address}</span>
+                        </div> 
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.street}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5"/>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.city}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5"/>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.country}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5"/>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.website}</span>
+                        </div>
+                    </div>        
+                </div>
+                <div class="col-md-6">
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-label font-2">#{messages.Phone}</span>
+                        </div> 
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.phone}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-value font-2">#{messages.Mobile}</span> 
+                        </div>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.mobile}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-value font-2">#{messages.Fax}</span> 
+                        </div>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.fax}</span>
+                        </div>
+                    </div>
+                    <div class="row form-data-1 line-breaks-1">
+                        <div class="col-md-5">
+                            <span class="form-data-value font-2">#{messages.Email}</span> 
+                        </div>
+                        <div class="col-md-7">
+                            <span class="form-data-value font-1">#{customerController.partner.email}</span>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" >
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#form-tab-1" class="form-tab" role="tab" data-toggle="tab">#{messages.OtherInfo}</a></li>
+                        <li><a href="#form-tab-2" role="tab" class="form-tab" data-toggle="tab">#{messages.Accounting}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="form-tab-1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.IsACustomer}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectBooleanCheckbox widgetVar="isCustomer" id="isCustomer" value="#{customerController.partner.customer}" disabled="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.IsAVendor}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectBooleanCheckbox widgetVar="isSupplier" id="isSupplier" value="#{customerController.partner.supplier}"  onchange="updateSupplierButtonsDisplay()" disabled="true"/>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Date}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h:outputText value="#{customerController.partner.createDate}" class="form-data-value font-1">
+                                                <f:convertDateTime pattern="MM-dd-yyyy"/>
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Active}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p:selectBooleanCheckbox id="active" value="#{customerController.partner.active}" disabled="true"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>      
+                        </div>
+
+                        <div class="tab-pane" id="form-tab-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.AccountReceivable}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <span class="form-data-value font-1">#{customerController.partner.accountReceivable.name}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Receivables}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <span class="form-data-value font-1">#{messages.Currency} #{customerController.getTotalReceivales()}</span>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class ="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.AccountPayable}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <span class="form-data-value font-1">#{customerController.partner.accountPayable.name}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row form-data-1 line-breaks-1">
+                                        <div class="col-md-5">
+                                            <span class="form-data-label font-2">#{messages.Payables}</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <span class="form-data-value font-1">#{messages.Currency} #{customerController.getTotalPayables()}</span>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+
+    <script type="text/javascript">
+        
+        var formId = "#{customerController.partner.id}";
+        setFormURL('id', formId);
+
+        updateCustomerButtonsDisplay();
+        updateSupplierButtonsDisplay();
+
+        setActiveTab();
+        
+    </script>
+
+
+</ui:composition>
